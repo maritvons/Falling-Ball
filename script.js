@@ -1,4 +1,4 @@
-var x, y, v, score;
+var x, y, v;
 
 function setup(){
   createCanvas(600, 400);
