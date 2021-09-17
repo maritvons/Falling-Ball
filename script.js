@@ -17,5 +17,7 @@ function draw(){
 
   if(y > 420){
     y = -20;
+    x = random(15, width-15);
+    v = v + .5;
   }
 }
