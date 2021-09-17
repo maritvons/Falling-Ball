@@ -12,6 +12,7 @@ function draw(){
   background(0);
 
   ellipse(x,y,15,15);
+  rect(mouseX,375,60,30);
 
   y = y + v;
 
