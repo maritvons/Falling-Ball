@@ -1,7 +1,9 @@
-var x, y, v, score, screen;
+var x, y, v, score, screen, apple;
 
 function setup(){
   createCanvas(600, 400);
+
+  apple = loadImage('Images/appleRed.png');
 
   x = 200;
   y = -20;
@@ -36,13 +38,13 @@ function game(){
   text("score = " + score, 30, 30);
   fill('white')
 
-  ellipse(x,y,20,20);
+  image(apple,x,y,30,30);
   rectMode(CENTER);
   rect(mouseX,390,60,40);
 
   y = y + v;
 
-  if(y > 390 && x > mouseX - 25 && x < mouseX + 25){
+  if(y > 390 && x > mouseX - 35 && x < mouseX + 35){
     y = -20;
     x = random(20, 580);
     v = v + .5;
