@@ -1,15 +1,18 @@
-var x, y, v, score, screen, apple;
+var x, y, v, score, screen, apple, imageNumber;
 
 function setup(){
   createCanvas(600, 400);
 
   apple = loadImage('Images/appleRed.png');
+  appleG = loadImage('Images/appleGreen.png');
+  appleY = loadImage('Images/appleYellow.png');
 
   x = 200;
-  y = -20;
+  y = -30;
   v = 2;
   score = 0;
   screen = 0;
+  imageNumber = 1;
 }
 
 function draw() {
@@ -25,28 +28,40 @@ function draw() {
 }
 
 function startScreen(){
-  background('lightblue');
+  background(200, 162, 200);
   textAlign(CENTER);
   text('Click to start', 300, 200);
   reset();
 }
 
 function game(){
-  background(0);
+  background(202, 231, 193);
 
   textAlign(LEFT)
   text("score = " + score, 30, 30);
   fill('white')
 
-  image(apple,x,y,30,30);
+  if(imageNumber == 1){
+    image(apple,x,y,30,30);
+  }
+
+  if(imageNumber == 2){
+    image(appleG,x,y,30,30);
+  }
+  
+  if(imageNumber == 3){
+    image(appleY,x,y,30,30);
+  }
+
   rectMode(CENTER);
   rect(mouseX,390,60,40);
 
   y = y + v;
 
   if(y > 390 && x > mouseX - 35 && x < mouseX + 35){
-    y = -20;
+    y = -30;
     x = random(20, 580);
+    imageNumber = Math.floor(random(1,4));
     v = v + .5;
     score = score + 1;
   }
@@ -74,8 +89,9 @@ function mousePressed(){
   }
 }
 
-function reset(){
+function reset(){  
+
 	  score = 0;
   	v = 2;
-  	y = -20;
+  	y = -30;
 }
