@@ -6,6 +6,7 @@ function setup(){
   apple = loadImage('Images/appleRed.png');
   appleG = loadImage('Images/appleGreen.png');
   appleY = loadImage('Images/appleYellow.png');
+  mand = loadImage('Images/mand.png');
 
   x = 200;
   y = -30;
@@ -52,9 +53,9 @@ function game(){
   if(imageNumber == 3){
     image(appleY,x,y,30,30);
   }
-
-  rectMode(CENTER);
-  rect(mouseX,390,60,40);
+  
+  imageMode(CENTER);
+  image(mand,mouseX,382,70,45);
 
   y = y + v;
 
