@@ -3,17 +3,20 @@ var x, y, v, score, screen, apple, imageNumber;
 function setup(){
   createCanvas(600, 400);
 
-  apple = loadImage('Images/appleRed.png');
-  appleG = loadImage('Images/appleGreen.png');
-  appleY = loadImage('Images/appleYellow.png');
-  mand = loadImage('Images/mand.png');
-
   x = 200;
   y = -30;
   v = 2;
   score = 0;
   screen = 0;
   imageNumber = 1;
+}
+
+function preload(){
+  apple = loadImage('Images/appleRed.png');
+  appleG = loadImage('Images/appleGreen.png');
+  appleY = loadImage('Images/appleYellow.png');
+  mand = loadImage('Images/mand.png');
+  appelboom = loadImage('Images/appelboom.jpeg');
 }
 
 function draw() {
@@ -37,6 +40,8 @@ function startScreen(){
 
 function game(){
   background(202, 231, 193);
+
+  image(appelboom,300,200,600,400);
 
   textAlign(LEFT)
   text("score = " + score, 30, 30);
