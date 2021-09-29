@@ -1,4 +1,4 @@
-var x, y, v, score, screen, apple, imageNumber;
+var x, y, v, score, screen, apple, imageNumber, highscore;
 
 function setup(){
   createCanvas(600, 400);
@@ -9,6 +9,7 @@ function setup(){
   score = 0;
   screen = 0;
   imageNumber = 1;
+  highscore = 0;
 }
 
 function preload(){
@@ -78,12 +79,17 @@ function game(){
 }
 
 function endScreen(){
-		background('pink')
+	background('pink')
 
-		textAlign(CENTER);
-    text('GAME OVER', 300, 200);
-  	text("SCORE = " + score, 300, 220);
-		text('click to play again', 300, 240);
+  if (score > highscore){
+    highscore = score;
+  }
+
+	textAlign(CENTER);
+  text('GAME OVER', 300, 200);
+	text("SCORE = " + score, 300, 220);
+	text('click to play again', 300, 240);
+  text('HIGHSCORE: ' + highscore, 300, 260);
 }
 
 function mousePressed(){
