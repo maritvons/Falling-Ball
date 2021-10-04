@@ -1,18 +1,37 @@
-var x, y, v, score, screen, apple, imageNumber, highscore;
+var x, y, vy, score, screen, imageNumber, highscore;
 
-function setup(){
+class Fruit {
+  constructor(img, x, y, score) {
+    this.img = img;
+    this.x = x;
+    this.y = y;
+    this.score = score;
+    this.vy = vy;
+  }
+
+  draw() {
+    image(this.img, this.x, this.y, 30, 30);
+    this.y = this.y + this.vy;
+  }
+}
+
+var fruit;
+
+function setup() {
   createCanvas(600, 400);
 
   x = 200;
   y = -30;
-  v = 2;
+  vy = 2;
   score = 0;
   screen = 0;
   imageNumber = 1;
   highscore = 0;
+
+  fruit = new Fruit(apple, random(20, 580), -30, 1);
 }
 
-function preload(){
+function preload() {
   apple = loadImage('Images/appleRed.png');
   appleG = loadImage('Images/appleGreen.png');
   appleY = loadImage('Images/appleYellow.png');
@@ -21,89 +40,91 @@ function preload(){
 }
 
 function draw() {
-	if(screen == 0){
+  if (screen == 0) {
     startScreen();
   }
-  else if(screen == 1){
+  else if (screen == 1) {
     game();
   }
-  else if(screen == 2){
-  	endScreen();
+  else if (screen == 2) {
+    endScreen();
   }
 }
 
-function startScreen(){
+function startScreen() {
   background(200, 162, 200);
   textAlign(CENTER);
   text('Click to start', 300, 200);
   reset();
 }
 
-function game(){
+function game() {
   background(202, 231, 193);
 
-  image(appelboom,300,200,600,400);
+  image(appelboom, 300, 200, 600, 400);
 
   textAlign(LEFT)
   text("score = " + score, 30, 30);
-  fill('white')
+  fill('white');
 
-  if(imageNumber == 1){
-    image(apple,x,y,30,30);
-  }
 
-  if(imageNumber == 2){
-    image(appleG,x,y,30,30);
-  }
-  
-  if(imageNumber == 3){
-    image(appleY,x,y,30,30);
-  }
-  
+  fruit.draw();
+
   imageMode(CENTER);
-  image(mand,mouseX,382,70,45);
+  image(mand, mouseX, 382, 70, 45);
 
-  y = y + v;
 
-  if(y > 390 && x > mouseX - 35 && x < mouseX + 35){
-    y = -30;
-    x = random(20, 580);
-    imageNumber = Math.floor(random(1,4));
-    v = v + .5;
-    score = score + 1;
+  if (fruit.y > 390 && fruit.x > mouseX - 35 && fruit.x < mouseX + 35) {
+    score = score + fruit.score;
+    vy += 0.5;
+    imageNumber = Math.floor(random(1, 4));
+
+    if (imageNumber == 1) {
+      fruit = new Fruit(apple, random(20, 580), -30, 1);
+    }
+
+    if (imageNumber == 2) {
+      fruit = new Fruit(appleG, random(20, 580), -30, 2);
+    }
+
+    if (imageNumber == 3) {
+      fruit = new Fruit(appleY, random(20, 580), -30, 3);
+    }
   }
 
-  if(y > 400){
+  if (fruit.y > 400) {
     screen = 2;
   }
 }
 
-function endScreen(){
-	background('pink')
+function endScreen() {
+  vy = 2;
+  background('pink')
 
-  if (score > highscore){
+  if (score > highscore) {
     highscore = score;
   }
 
-	textAlign(CENTER);
+  textAlign(CENTER);
   text('GAME OVER', 300, 200);
-	text("SCORE = " + score, 300, 220);
-	text('click to play again', 300, 240);
+  text("SCORE = " + score, 300, 220);
+  text('click to play again', 300, 240);
   text('HIGHSCORE: ' + highscore, 300, 260);
+  
 }
 
-function mousePressed(){
-  if(screen == 0){
+function mousePressed() {
+  if (screen == 0) {
     screen = 1;
   }
-  else if(screen == 2){
+  else if (screen == 2) {
     screen = 0;
   }
 }
 
-function reset(){  
+function reset() {
 
-	  score = 0;
-  	v = 2;
-  	y = -30;
+  score = 0;
+  fruit.vy = 2;
+  fruit.y = -30;
 }
