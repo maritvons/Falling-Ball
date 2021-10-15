@@ -83,9 +83,17 @@ function draw() {
 }
 
 function startScreen() {
-  background(200, 162, 200);
+  background(0);
+  imageMode(CENTER);
+  image(appelboom, 300, 200, 600, 400);
+
+  fill('white');
   textAlign(CENTER);
-  text('Click to start', 300, 200);
+  textSize(30);
+  text('Apple Fall', 300, 175);
+  textSize(24);
+  text('Welcome to the catching game!', 300, 330)
+  text('Click to start', 300, 370);
   reset();
 }
 
@@ -95,6 +103,7 @@ function game() {
   image(appelboom, 300, 200, 600, 400);
 
   textAlign(LEFT)
+  textSize(14);
   text("score = " + score, 30, 30);
   fill('white');
 
@@ -134,10 +143,15 @@ function endScreen() {
   }
 
   textAlign(CENTER);
-  text('GAME OVER', 300, 200);
-  text("SCORE = " + score, 300, 220);
-  text('click to play again', 300, 240);
-  text('HIGHSCORE: ' + highscore, 300, 260);
+  fill(0);
+  textSize(24);
+  text('GAME OVER', 300, 175);
+  textSize(16);
+  text("SCORE = " + score, 300, 210);
+  textSize(16);
+  text('click to play again', 300, 230);
+  textSize(18);
+  text('HIGHSCORE: ' + highscore, 300, 280);
 
 }
 
