@@ -29,11 +29,13 @@ class Fruit {
 
         // score updaten
         score = score + this.score;
+        pling.play();
       }
     }
 
     if (this.y > 400) {
       screen = 2; 
+      song.stop();
       let idx = fruits.indexOf(this);
         fruits.splice(idx,1);
     }
@@ -63,6 +65,9 @@ function preload() {
   appleY = loadImage('Images/appleYellow.png');
   mand = loadImage('Images/mand.png');
   appelboom = loadImage('Images/appelboom.jpeg');
+
+  song = loadSound('Sounds/music.mp3');
+  pling = loadSound('Sounds/pling.mp3');
 }
 
 function draw() {
@@ -139,6 +144,7 @@ function endScreen() {
 function mousePressed() {
   if (screen == 0) {
     screen = 1;
+    song.play();
   }
   else if (screen == 2) {
     screen = 0;
