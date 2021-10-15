@@ -1,27 +1,53 @@
 var x, y, vy, score, screen, imageNumber, highscore;
 
 class Fruit {
-  constructor(img, x, y, score) {
+  constructor(img, x, y, _score) {
     this.img = img;
     this.x = x;
     this.y = y;
-    this.score = score;
-    this.vy = vy;
+    this.score = _score;
+    this.vy = 2;
+        
+    if(score > 10){
+      this.vy = score / 4;
+    }
+
   }
 
   draw() {
     image(this.img, this.x, this.y, 30, 30);
     this.y = this.y + this.vy;
   }
+  
+  checkCollision() {
+    if (this.y > 390) {
+      if (this.x > mouseX - 35 && this.x < mouseX + 35) {
+        // gevangen! Dit stuk fruit kan weg.
+        // bepaal op welke plek in de lijst dit stuk fruit zit
+        let idx = fruits.indexOf(this);
+        fruits.splice(idx,1);
+
+        // score updaten
+        score = score + this.score;
+      }
+    }
+
+    if (this.y > 400) {
+      screen = 2; 
+      let idx = fruits.indexOf(this);
+        fruits.splice(idx,1);
+    }
+  }
 }
 
 var fruit;
+var fruits = [];
 
 function setup() {
   createCanvas(600, 400);
 
   x = 200;
-  y = -30;
+  y = 0;
   vy = 2;
   score = 0;
   screen = 0;
@@ -67,38 +93,35 @@ function game() {
   text("score = " + score, 30, 30);
   fill('white');
 
-
-  fruit.draw();
-
-  imageMode(CENTER);
-  image(mand, mouseX, 382, 70, 45);
-
-
-  if (fruit.y > 390 && fruit.x > mouseX - 35 && fruit.x < mouseX + 35) {
-    score = score + fruit.score;
-    vy += 0.5;
+  if (frameCount % 100 == 0) {
+    // spawn!
     imageNumber = Math.floor(random(1, 4));
 
     if (imageNumber == 1) {
-      fruit = new Fruit(apple, random(20, 580), -30, 1);
+      fruit = new Fruit(apple, random(20, 580), 0, 1);
     }
 
     if (imageNumber == 2) {
-      fruit = new Fruit(appleG, random(20, 580), -30, 2);
+      fruit = new Fruit(appleG, random(20, 580), 0, 2);
     }
 
     if (imageNumber == 3) {
-      fruit = new Fruit(appleY, random(20, 580), -30, 3);
+      fruit = new Fruit(appleY, random(20, 580), 0, 3);
     }
+
+    fruits.push(fruit);
   }
 
-  if (fruit.y > 400) {
-    screen = 2;
-  }
+  fruits.forEach((f) => {
+    f.draw();
+    f.checkCollision();
+  })
+
+  imageMode(CENTER);
+  image(mand, mouseX, 382, 70, 45);
 }
 
 function endScreen() {
-  vy = 2;
   background('pink')
 
   if (score > highscore) {
@@ -110,7 +133,7 @@ function endScreen() {
   text("SCORE = " + score, 300, 220);
   text('click to play again', 300, 240);
   text('HIGHSCORE: ' + highscore, 300, 260);
-  
+
 }
 
 function mousePressed() {
@@ -123,8 +146,7 @@ function mousePressed() {
 }
 
 function reset() {
-
   score = 0;
-  fruit.vy = 2;
-  fruit.y = -30;
+  fruit.y = 0;
+  vy = 2;
 }
